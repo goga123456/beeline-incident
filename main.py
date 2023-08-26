@@ -132,7 +132,7 @@ async def oborudovaniye_info(message: types.Message, state: FSMContext) -> None:
     async with state.proxy() as data:
         num = db.select_number()
         data['oinfo'] = message.text
-        await bot.send_message(chat_id="94766813",
+        await bot.send_message(chat_id="762646229",
                                text=f"Номер заявки:{num}\n\n"
                                     f"1.Номер места: {data['onumber']}\n"
                                     f"2.Суть проблемы: {data['oinfo']}")
