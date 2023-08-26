@@ -3,12 +3,13 @@ from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.dispatcher import FSMContext
 
 from keyboard import get_kb, get_p_or_v_kb
+from config import TOKEN_API
 from db import Database
 from messages import *
 from states import ProfileStatesGroup
 
 storage = MemoryStorage()
-bot = Bot(BOT_TOKEN)
+bot = Bot(TOKEN_API)
 dp = Dispatcher(bot,
                 storage=storage)
 
