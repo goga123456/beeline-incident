@@ -68,7 +68,7 @@ async def load_photo(message: types.Message, state: FSMContext) -> None:
         num = db.select_number()
         desc = data['it_description']
         data['it_photo'] = message.photo[0].file_id
-        await bot.send_photo(chat_id="94766813",
+        await bot.send_photo(chat_id="500411622",
                              photo=data['it_photo'],
                              caption=f"Номер заявки: {num}\n\n{desc}")
         # -952509631
