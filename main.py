@@ -68,7 +68,7 @@ async def load_photo(message: types.Message, state: FSMContext) -> None:
         num = db.select_number()
         desc = data['it_description']
         data['it_photo'] = message.photo[0].file_id
-        await bot.send_photo(chat_id="94766813",
+        await bot.send_photo(chat_id="55163202",
                              photo=data['it_photo'],
                              caption=f"Номер заявки: {num}\n\n{desc}")
         # -952509631
@@ -93,7 +93,7 @@ async def load_video(message: types.Message, state: FSMContext) -> None:
         num = db.select_number()
         desc = data['it_description']
         data['it_video'] = message.video.file_id
-        await bot.send_video(chat_id="94766813",
+        await bot.send_video(chat_id="55163202",
                              video=data['it_video'],
                              caption=f"Номер заявки: {num}\n\n{desc}")
         # -952509631
@@ -181,7 +181,7 @@ async def process_callback_nothing(callback_query: types.CallbackQuery, state: F
     async with state.proxy() as data:
         num = db.select_number()
         desc = data['it_description']
-        await bot.send_message(chat_id="94766813",
+        await bot.send_message(chat_id="55163202",
                                text=f"Номер заявки:{num} \n\nСуть проблемы: {desc}")
         await bot.send_message(chat_id="-952509631",
                                text=f"Номер заявки:{num} \n\nСуть проблемы: {desc}")
