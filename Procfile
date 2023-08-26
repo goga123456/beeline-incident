@@ -1,1 +1,1 @@
-web: gunicorn --workers=1 core.wsgi
+web: python main.py
