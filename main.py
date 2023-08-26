@@ -1,15 +1,28 @@
 from aiogram import types, executor, Bot, Dispatcher
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.dispatcher import FSMContext
-
+import os
 from keyboard import get_kb, get_p_or_v_kb
-from config import TOKEN_API
 from db import Database
 from messages import *
 from states import ProfileStatesGroup
 
 storage = MemoryStorage()
-bot = Bot(TOKEN_API)
+TOKEN = os.getenv('BOT_TOKEN')
+bot = Bot(token=TOKEN)
+dp = Dispatcher(bot)
+
+HEROKU_APP_NAME = os.getenv('HEROKU_APP_NAME')
+
+# webhook settings
+WEBHOOK_HOST = f'https://{HEROKU_APP_NAME}.herokuapp.com'
+WEBHOOK_PATH = f'/webhook/{TOKEN}'
+WEBHOOK_URL = f'{WEBHOOK_HOST}{WEBHOOK_PATH}'
+
+# webserver settings
+WEBAPP_HOST = '0.0.0.0'
+WEBAPP_PORT = os.getenv('PORT', default=8000)
+
 dp = Dispatcher(bot,
                 storage=storage)
 
@@ -176,7 +189,21 @@ async def process_callback_nothing(callback_query: types.CallbackQuery, state: F
     db.numberplusone()
     await state.finish()
 
+async def on_startup(dispatcher):
+    await bot.set_webhook(WEBHOOK_URL, drop_pending_updates=True)
+
+
+async def on_shutdown(dispatcher):
+    await bot.delete_webhook()
 
 if __name__ == '__main__':
-    executor.start_polling(dp,
-                           skip_updates=True)
+    logging.basicConfig(level=logging.INFO)
+    start_webhook(
+        dispatcher=dp,
+        webhook_path=WEBHOOK_PATH,
+        skip_updates=True,
+        on_startup=on_startup,
+        on_shutdown=on_shutdown,
+        host=WEBAPP_HOST,
+        port=WEBAPP_PORT,
+    )
