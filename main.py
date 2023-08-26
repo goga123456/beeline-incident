@@ -71,7 +71,9 @@ async def load_photo(message: types.Message, state: FSMContext) -> None:
         await bot.send_photo(chat_id="55163202",
                              photo=data['it_photo'],
                              caption=f"Номер заявки: {num}\n\n{desc}")
-        # -952509631
+        await bot.send_photo(chat_id="621449",
+                             photo=data['it_photo'],
+                             caption=f"Номер заявки: {num}\n\n{desc}")
         await bot.send_photo(chat_id="-952509631",
                              photo=data['it_photo'],
                              caption=f"Номер заявки: {num}\n\n{desc}")
@@ -96,7 +98,10 @@ async def load_video(message: types.Message, state: FSMContext) -> None:
         await bot.send_video(chat_id="55163202",
                              video=data['it_video'],
                              caption=f"Номер заявки: {num}\n\n{desc}")
-        # -952509631
+        await bot.send_video(chat_id="621449",
+                             video=data['it_video'],
+                             caption=f"Номер заявки: {num}\n\n{desc}")
+        
         await bot.send_video(chat_id="-952509631",
                              video=data['it_video'],
                              caption=f"Номер заявки: {num}\n\n{desc}")
@@ -182,6 +187,8 @@ async def process_callback_nothing(callback_query: types.CallbackQuery, state: F
         num = db.select_number()
         desc = data['it_description']
         await bot.send_message(chat_id="55163202",
+                               text=f"Номер заявки:{num} \n\nСуть проблемы: {desc}")
+        await bot.send_message(chat_id="621449",
                                text=f"Номер заявки:{num} \n\nСуть проблемы: {desc}")
         await bot.send_message(chat_id="-952509631",
                                text=f"Номер заявки:{num} \n\nСуть проблемы: {desc}")
