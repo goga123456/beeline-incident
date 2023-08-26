@@ -2,6 +2,7 @@ from aiogram import types, executor, Bot, Dispatcher
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.dispatcher import FSMContext
 import os
+import logging
 from keyboard import get_kb, get_p_or_v_kb
 from db import Database
 from messages import *
