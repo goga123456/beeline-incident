@@ -76,6 +76,7 @@ async def load_photo(message: types.Message, state: FSMContext) -> None:
                              caption=f"Номер заявки: {num}\n\n{desc}")
         await bot.send_message(chat_id=message.from_user.id, text=success)
         await bot.send_message(chat_id=message.from_user.id, text=f"Номер заявки: {num}")
+        await bot.send_message(chat_id=message.from_user.id, text=again)
     db.numberplusone()
     await state.finish()
 
@@ -101,6 +102,7 @@ async def load_video(message: types.Message, state: FSMContext) -> None:
                              caption=f"Номер заявки: {num}\n\n{desc}")
         await bot.send_message(chat_id=message.from_user.id, text=success)
         await bot.send_message(chat_id=message.from_user.id, text=f"Номер заявки: {num}")
+        await bot.send_message(chat_id=message.from_user.id, text=again)
 
     db.numberplusone()
     await state.finish()
@@ -142,6 +144,7 @@ async def oborudovaniye_info(message: types.Message, state: FSMContext) -> None:
                                     f"2.Суть проблемы: {data['oinfo']}")
         await bot.send_message(chat_id=message.from_user.id, text=success)
         await bot.send_message(chat_id=message.from_user.id, text=f"Номер заявки: {num}")
+        await bot.send_message(chat_id=message.from_user.id, text=again)
     db.numberplusone()
     await state.finish()
 
@@ -186,6 +189,7 @@ async def process_callback_nothing(callback_query: types.CallbackQuery, state: F
                                text=f"Номер заявки:{num} \n\nСуть проблемы: {desc}")
         await bot.send_message(chat_id=callback_query.from_user.id, text=success)
         await bot.send_message(chat_id=callback_query.from_user.id, text=f"Номер заявки: {num}")
+        await bot.send_message(chat_id=callback_query.from_user.id, text=again)
     await callback_query.message.delete()
     db.numberplusone()
     await state.finish()
