@@ -68,15 +68,17 @@ async def load_photo(message: types.Message, state: FSMContext) -> None:
         num = db.select_number()
         desc = data['it_description']
         data['it_photo'] = message.photo[0].file_id
-        await bot.send_photo(chat_id="621449",
+        await bot.send_photo(chat_id="94766813",
                              photo=data['it_photo'],
-                             caption=f"Номер заявки: {num}\n\n{desc}")
+                             caption=f"{datetime.now()}\n"
+                                     f"Номер заявки: {num}\n\n{desc}")
+        # -952509631
         await bot.send_photo(chat_id="-952509631",
                              photo=data['it_photo'],
-                             caption=f"Номер заявки: {num}\n\n{desc}")
+                             caption=f"{datetime.now()}\n"
+                                     f"Номер заявки: {num}\n\n{desc}")
         await bot.send_message(chat_id=message.from_user.id, text=success)
         await bot.send_message(chat_id=message.from_user.id, text=f"Номер заявки: {num}")
-        await bot.send_message(chat_id=message.from_user.id, text=again)
     db.numberplusone()
     await state.finish()
 
@@ -93,16 +95,17 @@ async def load_video(message: types.Message, state: FSMContext) -> None:
         num = db.select_number()
         desc = data['it_description']
         data['it_video'] = message.video.file_id
-        await bot.send_video(chat_id="621449",
+        await bot.send_video(chat_id="94766813",
                              video=data['it_video'],
-                             caption=f"Номер заявки: {num}\n\n{desc}")
-        
+                             caption=f"{datetime.now()}\n"
+                                     f"Номер заявки: {num}\n\n{desc}")
+        # -952509631
         await bot.send_video(chat_id="-952509631",
                              video=data['it_video'],
-                             caption=f"Номер заявки: {num}\n\n{desc}")
+                             caption=f"{datetime.now()}\n"
+                                     f"Номер заявки: {num}\n\n{desc}")
         await bot.send_message(chat_id=message.from_user.id, text=success)
         await bot.send_message(chat_id=message.from_user.id, text=f"Номер заявки: {num}")
-        await bot.send_message(chat_id=message.from_user.id, text=again)
 
     db.numberplusone()
     await state.finish()
@@ -133,18 +136,19 @@ async def oborudovaniye_info(message: types.Message, state: FSMContext) -> None:
     async with state.proxy() as data:
         num = db.select_number()
         data['oinfo'] = message.text
-        await bot.send_message(chat_id="762646229",
-                               text=f"Номер заявки:{num}\n\n"
+        await bot.send_message(chat_id="94766813",
+                               text=f"{datetime.now()}\n"
+                                    f"Номер заявки:{num}\n\n"
                                     f"1.Номер места: {data['onumber']}\n"
                                     f"2.Суть проблемы: {data['oinfo']}")
         # -952509631
         await bot.send_message(chat_id="-952509631",
-                               text=f"Номер заявки:{num} \n\n"
+                               text=f"{datetime.now()}\n"
+                                    f"Номер заявки:{num} \n\n"
                                     f"1.Номер места: {data['onumber']}\n"
                                     f"2.Суть проблемы: {data['oinfo']}")
         await bot.send_message(chat_id=message.from_user.id, text=success)
         await bot.send_message(chat_id=message.from_user.id, text=f"Номер заявки: {num}")
-        await bot.send_message(chat_id=message.from_user.id, text=again)
     db.numberplusone()
     await state.finish()
 
@@ -183,13 +187,14 @@ async def process_callback_nothing(callback_query: types.CallbackQuery, state: F
     async with state.proxy() as data:
         num = db.select_number()
         desc = data['it_description']
-        await bot.send_message(chat_id="621449",
-                               text=f"Номер заявки:{num} \n\nСуть проблемы: {desc}")
+        await bot.send_message(chat_id="94766813",
+                               text=f"{datetime.now()}\n"
+                                    f"Номер заявки:{num} \n\nСуть проблемы: {desc}")
         await bot.send_message(chat_id="-952509631",
-                               text=f"Номер заявки:{num} \n\nСуть проблемы: {desc}")
+                               text=f"{datetime.now()}\n"
+                                    f"Номер заявки:{num} \n\nСуть проблемы: {desc}")
         await bot.send_message(chat_id=callback_query.from_user.id, text=success)
         await bot.send_message(chat_id=callback_query.from_user.id, text=f"Номер заявки: {num}")
-        await bot.send_message(chat_id=callback_query.from_user.id, text=again)
     await callback_query.message.delete()
     db.numberplusone()
     await state.finish()
