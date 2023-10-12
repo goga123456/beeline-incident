@@ -2,7 +2,7 @@ from aiogram import types, executor, Bot, Dispatcher
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.utils.executor import start_webhook
 from aiogram.dispatcher import FSMContext
-from datetime import datetime
+from datetime import datetime, timedelta
 import os
 import logging
 from keyboard import get_kb, get_p_or_v_kb
