@@ -71,13 +71,11 @@ async def load_photo(message: types.Message, state: FSMContext) -> None:
         data['it_photo'] = message.photo[0].file_id
         await bot.send_photo(chat_id="94766813",
                              photo=data['it_photo'],
-                             caption=f"{datetime.now().date() + timedelta(hours=5)}\n"
-                                     f"Номер заявки: {num}\n\n{desc}")
+                             caption=f"Номер заявки: {num}\n\n{desc}")
         # -952509631
         await bot.send_photo(chat_id="-952509631",
                              photo=data['it_photo'],
-                             caption=f"{datetime.now().date() + timedelta(hours=5)}\n"
-                                     f"Номер заявки: {num}\n\n{desc}")
+                             caption=f"Номер заявки: {num}\n\n{desc}")
         await bot.send_message(chat_id=message.from_user.id, text=success)
         await bot.send_message(chat_id=message.from_user.id, text=f"Номер заявки: {num}")
     db.numberplusone()
@@ -98,13 +96,11 @@ async def load_video(message: types.Message, state: FSMContext) -> None:
         data['it_video'] = message.video.file_id
         await bot.send_video(chat_id="94766813",
                              video=data['it_video'],
-                             caption=f"{datetime.now().date() + timedelta(hours=5)}\n"
-                                     f"Номер заявки: {num}\n\n{desc}")
+                             caption=f"Номер заявки: {num}\n\n{desc}")
         # -952509631
         await bot.send_video(chat_id="-952509631",
                              video=data['it_video'],
-                             caption=f"{datetime.now().date() + timedelta(hours=5)}\n"
-                                     f"Номер заявки: {num}\n\n{desc}")
+                             caption=f"Номер заявки: {num}\n\n{desc}")
         await bot.send_message(chat_id=message.from_user.id, text=success)
         await bot.send_message(chat_id=message.from_user.id, text=f"Номер заявки: {num}")
 
@@ -138,14 +134,12 @@ async def oborudovaniye_info(message: types.Message, state: FSMContext) -> None:
         num = db.select_number()
         data['oinfo'] = message.text
         await bot.send_message(chat_id="94766813",
-                               text=f"{datetime.now().date() + timedelta(hours=5)}\n"
-                                    f"Номер заявки:{num}\n\n"
+                               text=f"Номер заявки:{num}\n\n"
                                     f"1.Номер места: {data['onumber']}\n"
                                     f"2.Суть проблемы: {data['oinfo']}")
         # -952509631
         await bot.send_message(chat_id="-952509631",
-                               text=f"{datetime.now().date() + timedelta(hours=5)}\n"
-                                    f"Номер заявки:{num} \n\n"
+                               text=f"Номер заявки:{num} \n\n"
                                     f"1.Номер места: {data['onumber']}\n"
                                     f"2.Суть проблемы: {data['oinfo']}")
         await bot.send_message(chat_id=message.from_user.id, text=success)
@@ -189,11 +183,9 @@ async def process_callback_nothing(callback_query: types.CallbackQuery, state: F
         num = db.select_number()
         desc = data['it_description']
         await bot.send_message(chat_id="94766813",
-                               text=f"{datetime.now().date() + timedelta(hours=5)}\n"
-                                    f"Номер заявки:{num} \n\nСуть проблемы: {desc}")
+                               text=f"Номер заявки:{num} \n\nСуть проблемы: {desc}")
         await bot.send_message(chat_id="-952509631",
-                               text=f"{datetime.now().date() + timedelta(hours=5)}\n"
-                                    f"Номер заявки:{num} \n\nСуть проблемы: {desc}")
+                               text=f"Номер заявки:{num} \n\nСуть проблемы: {desc}")
         await bot.send_message(chat_id=callback_query.from_user.id, text=success)
         await bot.send_message(chat_id=callback_query.from_user.id, text=f"Номер заявки: {num}")
     await callback_query.message.delete()
