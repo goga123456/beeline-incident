@@ -108,44 +108,30 @@ async def load_video(message: types.Message, state: FSMContext) -> None:
     await state.finish()
 
 
-@dp.message_handler(lambda message: not message.text, state=ProfileStatesGroup.oborudovaniye_number)
+@dp.message_handler(lambda message: not message.text, state=ProfileStatesGroup.oborudovaniye_number_and_desc)
 async def check_oborudovaniye_table_number(message: types.Message):
     await bot.send_message(chat_id=message.from_user.id,
                            text=this_is_not_text)
 
 
-@dp.message_handler(content_types=['text'], state=ProfileStatesGroup.oborudovaniye_number)
+@dp.message_handler(content_types=['text'], state=ProfileStatesGroup.oborudovaniye_number_and_desc)
 async def oborudovaniye_table_number(message: types.Message, state: FSMContext) -> None:
     async with state.proxy() as data:
-        data['onumber'] = message.text
-    await bot.send_message(chat_id=message.from_user.id, text=oborudovaniye_problem_description)
-    await ProfileStatesGroup.oborudovaniye_problem_info.set()
-
-
-@dp.message_handler(lambda message: not message.text, state=ProfileStatesGroup.oborudovaniye_problem_info)
-async def check_oborudovaniye_info(message: types.Message):
-    await bot.send_message(chat_id=message.from_user.id,
-                           text=this_is_not_text)
-
-
-@dp.message_handler(content_types=['text'], state=ProfileStatesGroup.oborudovaniye_problem_info)
-async def oborudovaniye_info(message: types.Message, state: FSMContext) -> None:
-    async with state.proxy() as data:
         num = db.select_number()
-        data['oinfo'] = message.text
+        data['onumber_and_desc'] = message.text
         await bot.send_message(chat_id="94766813",
                                text=f"Номер заявки:{num}\n\n"
-                                    f"1.Номер места: {data['onumber']}\n"
-                                    f"2.Суть проблемы: {data['oinfo']}")
+                                    f"Номер рабочего места и суть проблемы: {data['onumber_and_desc']}")
+
         # -952509631
         await bot.send_message(chat_id="-952509631",
-                               text=f"Номер заявки:{num} \n\n"
-                                    f"1.Номер места: {data['onumber']}\n"
-                                    f"2.Суть проблемы: {data['oinfo']}")
+                               text=f"Номер заявки:{num}\n\n"
+                                    f"Номер рабочего места и суть проблемы: {data['onumber_and_desc']}")
         await bot.send_message(chat_id=message.from_user.id, text=success)
         await bot.send_message(chat_id=message.from_user.id, text=f"Номер заявки: {num}")
-    db.numberplusone()
+
     await state.finish()
+    db.numberplusone()
 
 
 @dp.callback_query_handler()
@@ -156,8 +142,8 @@ async def ikb_cb_handler(callback_query: types.CallbackQuery):
         await callback_query.message.delete()
 
     if callback_query.data == 'btn_oborudovaniye':
-        await ProfileStatesGroup.oborudovaniye_number.set()
-        await bot.send_message(callback_query.from_user.id, text=oborudovaniye_table_number_msg)
+        await ProfileStatesGroup.oborudovaniye_number_and_desc.set()
+        await bot.send_message(callback_query.from_user.id, text=oborudovaniye_table_number_and_desc_msg)
         await callback_query.message.delete()
 
 
