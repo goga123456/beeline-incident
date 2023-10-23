@@ -121,12 +121,12 @@ async def oborudovaniye_table_number(message: types.Message, state: FSMContext) 
         data['onumber_and_desc'] = message.text
         await bot.send_message(chat_id="94766813",
                                text=f"Номер заявки:{num}\n\n"
-                                    f"Номер рабочего места и суть проблемы: {data['onumber_and_desc']}")
+                                    f"Номер рабочего места и суть проблемы:\n{data['onumber_and_desc']}")
 
         # -952509631
         await bot.send_message(chat_id="-952509631",
                                text=f"Номер заявки:{num}\n\n"
-                                    f"Номер рабочего места и суть проблемы: {data['onumber_and_desc']}")
+                                    f"Номер рабочего места и суть проблемы:\n{data['onumber_and_desc']}")
         await bot.send_message(chat_id=message.from_user.id, text=success)
         await bot.send_message(chat_id=message.from_user.id, text=f"Номер заявки: {num}")
 
