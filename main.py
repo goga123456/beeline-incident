@@ -50,62 +50,74 @@ async def check_info(message: types.Message):
 
 @dp.message_handler(content_types=['text'], state=ProfileStatesGroup.it_problem_info)
 async def load_it_info(message: types.Message, state: FSMContext) -> None:
-    async with state.proxy() as data:
-        data['it_description'] = message.text
-    await bot.send_message(chat_id=message.from_user.id,
-                           text=what_you_want_to_send,
-                           reply_markup=get_p_or_v_kb())
+    if message.text == "🔙":
+        async with state.proxy() as data:
+            await bot.send_message(chat_id=message.from_user.id,
+                                   text=start_msg,
+                                   reply_markup=get_kb())
+            await state.finish()
+    else:
+        async with state.proxy() as data:
+            data['it_description'] = message.text
+        await bot.send_message(chat_id=message.from_user.id,
+                               text=what_you_want_to_send,
+                               reply_markup=get_p_or_v_kb())
 
 
-@dp.message_handler(lambda message: not message.photo, state=ProfileStatesGroup.it_problem_photo)
-async def check_photo(message: types.Message):
-    await bot.send_message(chat_id=message.from_user.id,
-                           text=this_is_not_photo)
-
-
-@dp.message_handler(content_types=['photo'], state=ProfileStatesGroup.it_problem_photo)
+@dp.message_handler(content_types=[*types.ContentTypes.PHOTO, *types.ContentTypes.TEXT], state=ProfileStatesGroup.it_problem_photo)
 async def load_photo(message: types.Message, state: FSMContext) -> None:
-    async with state.proxy() as data:
-        num = db.select_number()
-        desc = data['it_description']
-        data['it_photo'] = message.photo[0].file_id
-        await bot.send_photo(chat_id="94766813",
-                             photo=data['it_photo'],
-                             caption=f"Номер заявки: {num}\n\n{desc}")
-        # -952509631
-        await bot.send_photo(chat_id="-952509631",
-                             photo=data['it_photo'],
-                             caption=f"Номер заявки: {num}\n\n{desc}")
-        await bot.send_message(chat_id=message.from_user.id, text=success)
-        await bot.send_message(chat_id=message.from_user.id, text=f"Номер заявки: {num}")
-    db.numberplusone()
-    await state.finish()
+    if message.text == "🔙":
+        async with state.proxy() as data:
+            await bot.send_message(chat_id=message.from_user.id,
+                                   text=what_you_want_to_send,
+                                   reply_markup=get_p_or_v_kb())
+            await ProfileStatesGroup.it_problem_info.set()
+    else:
+        async with state.proxy() as data:
+            num = db.select_number()
+            desc = data['it_description']
+            data['it_photo'] = message.photo[0].file_id
+            await bot.send_photo(chat_id="94766813",
+                                 photo=data['it_photo'],
+                                 caption=f"Номер заявки: {num}\n\n{desc}")
+            # -952509631
+            await bot.send_photo(chat_id="-952509631",
+                                 photo=data['it_photo'],
+                                 caption=f"Номер заявки: {num}\n\n{desc}")
+            await bot.send_message(chat_id=message.from_user.id, text=success)
+            await bot.send_message(chat_id=message.from_user.id, text=f"Номер заявки: {num}")
+        db.numberplusone()
+        await state.finish()
 
 
-@dp.message_handler(lambda message: not message.video, state=ProfileStatesGroup.it_problem_video)
-async def check_video(message: types.Message):
-    await bot.send_message(chat_id=message.from_user.id,
-                           text=this_is_not_video)
 
 
-@dp.message_handler(content_types=['video'], state=ProfileStatesGroup.it_problem_video)
+
+@dp.message_handler(content_types=[*types.ContentTypes.VIDEO, *types.ContentTypes.TEXT], state=ProfileStatesGroup.it_problem_video)
 async def load_video(message: types.Message, state: FSMContext) -> None:
-    async with state.proxy() as data:
-        num = db.select_number()
-        desc = data['it_description']
-        data['it_video'] = message.video.file_id
-        await bot.send_video(chat_id="94766813",
-                             video=data['it_video'],
-                             caption=f"Номер заявки: {num}\n\n{desc}")
-        # -952509631
-        await bot.send_video(chat_id="-952509631",
-                             video=data['it_video'],
-                             caption=f"Номер заявки: {num}\n\n{desc}")
-        await bot.send_message(chat_id=message.from_user.id, text=success)
-        await bot.send_message(chat_id=message.from_user.id, text=f"Номер заявки: {num}")
+    if message.text == "🔙":
+        async with state.proxy() as data:
+            await bot.send_message(chat_id=message.from_user.id,
+                                   text=what_you_want_to_send,
+                                   reply_markup=get_p_or_v_kb())
+            await ProfileStatesGroup.it_problem_info.set()
+    else:
+        async with state.proxy() as data:
+            num = db.select_number()
+            desc = data['it_description']
+            data['it_video'] = message.video.file_id
+            await bot.send_video(chat_id="94766813",
+                                 video=data['it_video'],
+                                 caption=f"Номер заявки: {num}\n\n{desc}")
+            # -952509631
+            await bot.send_video(chat_id="-952509631",
+                                 video=data['it_video'],
+                                 caption=f"Номер заявки: {num}\n\n{desc}")
+            await bot.send_message(chat_id=message.from_user.id, text=success)
+            await bot.send_message(chat_id=message.from_user.id, text=f"Номер заявки: {num}")
 
-    db.numberplusone()
-    await state.finish()
+        db.numberplusone()
+        await state.finish()
 
 
 @dp.message_handler(lambda message: not message.text, state=ProfileStatesGroup.oborudovaniye_number_and_desc)
@@ -116,34 +128,44 @@ async def check_oborudovaniye_table_number(message: types.Message):
 
 @dp.message_handler(content_types=['text'], state=ProfileStatesGroup.oborudovaniye_number_and_desc)
 async def oborudovaniye_table_number(message: types.Message, state: FSMContext) -> None:
-    async with state.proxy() as data:
-        num = db.select_number()
-        data['onumber_and_desc'] = message.text
-        await bot.send_message(chat_id="94766813",
-                               text=f"Номер заявки:{num}\n\n"
-                                    f"Номер рабочего места и суть проблемы:\n{data['onumber_and_desc']}")
+    if message.text == "🔙":
+        async with state.proxy() as data:
+            await bot.send_message(chat_id=message.from_user.id,
+                                   text=start_msg,
+                                   reply_markup=get_kb())
+            await state.finish()
 
-        # -952509631
-        await bot.send_message(chat_id="-952509631",
-                               text=f"Номер заявки:{num}\n\n"
-                                    f"Номер рабочего места и суть проблемы:\n{data['onumber_and_desc']}")
-        await bot.send_message(chat_id=message.from_user.id, text=success)
-        await bot.send_message(chat_id=message.from_user.id, text=f"Номер заявки: {num}")
+    else:
+        async with state.proxy() as data:
+            num = db.select_number()
+            data['onumber_and_desc'] = message.text
+            await bot.send_message(chat_id="94766813",
+                                   text=f"Номер заявки:{num}\n\n"
+                                        f"Номер рабочего места и суть проблемы:\n{data['onumber_and_desc']}")
 
-    await state.finish()
-    db.numberplusone()
+            # -952509631
+            await bot.send_message(chat_id="-952509631",
+                                   text=f"Номер заявки:{num}\n\n"
+                                        f"Номер рабочего места и суть проблемы:\n{data['onumber_and_desc']}")
+            await bot.send_message(chat_id=message.from_user.id, text=success)
+            await bot.send_message(chat_id=message.from_user.id, text=f"Номер заявки: {num}")
+
+        await state.finish()
+        db.numberplusone()
+
+
 
 
 @dp.callback_query_handler()
 async def ikb_cb_handler(callback_query: types.CallbackQuery):
     if callback_query.data == 'btn_it':
         await ProfileStatesGroup.it_problem_info.set()
-        await bot.send_message(callback_query.from_user.id, text=it_msg)
+        await bot.send_message(callback_query.from_user.id, text=it_msg, reply_markup=get_start_and_back_kb())
         await callback_query.message.delete()
 
     if callback_query.data == 'btn_oborudovaniye':
         await ProfileStatesGroup.oborudovaniye_number_and_desc.set()
-        await bot.send_message(callback_query.from_user.id, text=oborudovaniye_table_number_and_desc_msg)
+        await bot.send_message(callback_query.from_user.id, text=oborudovaniye_table_number_and_desc_msg, reply_markup=get_start_and_back_kb())
         await callback_query.message.delete()
 
 
@@ -161,6 +183,13 @@ async def process_callback_video(callback_query: types.CallbackQuery):
     await bot.send_message(callback_query.from_user.id,
                            text=video)
     await callback_query.message.delete()
+
+@dp.callback_query_handler(lambda c: c.data == 'Назад', state=ProfileStatesGroup.it_problem_info)
+async def process_callback_video(callback_query: types.CallbackQuery, state: FSMContext):
+    async with state.proxy() as data:
+        await ProfileStatesGroup.it_problem_info.set()
+        await bot.send_message(callback_query.from_user.id, text=it_msg, reply_markup=get_start_and_back_kb())
+        await callback_query.message.delete()
 
 
 @dp.callback_query_handler(lambda c: c.data == 'btn_nothing', state=ProfileStatesGroup.it_problem_info)
