@@ -17,3 +17,9 @@ def get_p_or_v_kb() -> InlineKeyboardMarkup:
     b4 = InlineKeyboardButton('Назад', callback_data='Назад')
     kb2.add(b1, b2).add(b3).add(b4)
     return kb2
+
+def get_start_kb() -> ReplyKeyboardMarkup:
+    kmain2 = ReplyKeyboardMarkup(resize_keyboard=True)
+    b1 = KeyboardButton('/start')
+    kmain2.add(b1)
+    return kmain2
