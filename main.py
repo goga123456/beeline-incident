@@ -6,7 +6,7 @@ from datetime import datetime, timedelta
 import os
 import logging
 from ReplyKeyboard import get_start_and_back_kb
-from keyboard import get_kb, get_p_or_v_kb
+from keyboard import get_kb, get_p_or_v_kb, get_start_kb
 from db import Database
 from messages import *
 from states import ProfileStatesGroup
@@ -86,7 +86,7 @@ async def load_photo(message: types.Message, state: FSMContext) -> None:
                                  photo=data['it_photo'],
                                  caption=f"Номер заявки: {num}\n\n{desc}")
             await bot.send_message(chat_id=message.from_user.id, text=success)
-            await bot.send_message(chat_id=message.from_user.id, text=f"Номер заявки: {num}")
+            await bot.send_message(chat_id=message.from_user.id, text=f"Номер заявки: {num}", reply_markup=get_start_kb())
         db.numberplusone()
         await state.finish()
 
@@ -115,7 +115,7 @@ async def load_video(message: types.Message, state: FSMContext) -> None:
                                  video=data['it_video'],
                                  caption=f"Номер заявки: {num}\n\n{desc}")
             await bot.send_message(chat_id=message.from_user.id, text=success)
-            await bot.send_message(chat_id=message.from_user.id, text=f"Номер заявки: {num}")
+            await bot.send_message(chat_id=message.from_user.id, text=f"Номер заявки: {num}", reply_markup=get_start_kb())
 
         db.numberplusone()
         await state.finish()
@@ -149,7 +149,7 @@ async def oborudovaniye_table_number(message: types.Message, state: FSMContext) 
                                    text=f"Номер заявки:{num}\n\n"
                                         f"Номер рабочего места и суть проблемы:\n{data['onumber_and_desc']}")
             await bot.send_message(chat_id=message.from_user.id, text=success)
-            await bot.send_message(chat_id=message.from_user.id, text=f"Номер заявки: {num}")
+            await bot.send_message(chat_id=message.from_user.id, text=f"Номер заявки: {num}", reply_markup=get_start_kb())
 
         await state.finish()
         db.numberplusone()
@@ -203,7 +203,7 @@ async def process_callback_nothing(callback_query: types.CallbackQuery, state: F
         await bot.send_message(chat_id="-952509631",
                                text=f"Номер заявки:{num} \n\nСуть проблемы: {desc}")
         await bot.send_message(chat_id=callback_query.from_user.id, text=success)
-        await bot.send_message(chat_id=callback_query.from_user.id, text=f"Номер заявки: {num}")
+        await bot.send_message(chat_id=callback_query.from_user.id, text=f"Номер заявки: {num}", reply_markup=get_start_kb())
     await callback_query.message.delete()
     db.numberplusone()
     await state.finish()
