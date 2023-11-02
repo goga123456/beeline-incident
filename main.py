@@ -65,7 +65,7 @@ async def load_it_info(message: types.Message, state: FSMContext) -> None:
                                reply_markup=get_p_or_v_kb())
 
 
-@dp.message_handler(content_types=[*types.ContentTypes.ANY], state=ProfileStatesGroup.it_problem_photo)
+@dp.message_handler(content_types=[*types.ContentTypes.ANY, *types.ContentTypes.TEXT], state=ProfileStatesGroup.it_problem_photo)
 async def load_photo(message: types.Message, state: FSMContext) -> None:
     if message.text == "🔙":
         async with state.proxy() as data:
@@ -94,7 +94,7 @@ async def load_photo(message: types.Message, state: FSMContext) -> None:
 
 
 
-@dp.message_handler(content_types=[*types.ContentTypes.ANY], state=ProfileStatesGroup.it_problem_video)
+@dp.message_handler(content_types=[*types.ContentTypes.ANY, *types.ContentTypes.TEXT], state=ProfileStatesGroup.it_problem_video)
 async def load_video(message: types.Message, state: FSMContext) -> None:
     if message.text == "🔙":
         async with state.proxy() as data:
