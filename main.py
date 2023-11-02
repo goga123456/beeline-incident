@@ -73,7 +73,7 @@ async def load_photo(message: types.Message, state: FSMContext) -> None:
                                    text=what_you_want_to_send,
                                    reply_markup=get_p_or_v_kb())
             await ProfileStatesGroup.it_problem_info.set()
-    else:
+    if message.photo:
         async with state.proxy() as data:
             num = db.select_number()
             desc = data['it_description']
@@ -102,7 +102,7 @@ async def load_video(message: types.Message, state: FSMContext) -> None:
                                    text=what_you_want_to_send,
                                    reply_markup=get_p_or_v_kb())
             await ProfileStatesGroup.it_problem_info.set()
-    else:
+    if message.video:
         async with state.proxy() as data:
             num = db.select_number()
             desc = data['it_description']
