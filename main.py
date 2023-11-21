@@ -3,6 +3,7 @@ from aiogram import types, executor, Bot, Dispatcher
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.dispatcher import FSMContext
 from google.oauth2.service_account import Credentials
+from aiogram.utils.executor import start_webhook
 from googleapiclient.discovery import build
 from config import TOKEN_API
 from kbs.inline_kbs import get_kb, get_p_or_v_kb
@@ -12,6 +13,7 @@ from states import ProfileStatesGroup, AdminStatesGroup
 import os
 
 storage = MemoryStorage()
+TOKEN = os.getenv('BOT_TOKEN')
 bot = Bot(TOKEN_API)
 dp = Dispatcher(bot,
                 storage=storage)
