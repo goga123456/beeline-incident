@@ -5,7 +5,7 @@ def get_kb() -> InlineKeyboardMarkup:
     kb = InlineKeyboardMarkup(resize_keyboard=True)
     kb1 = InlineKeyboardButton('Horizon', callback_data='Horizon')
     kb2 = InlineKeyboardButton('ClarifyCRM', callback_data='ClarifyCRM')
-    kb3 = InlineKeyboardButton('Проблемы с компьютером', callback_data='PK_problems')
+    kb3 = InlineKeyboardButton('Проблемы с оборудованием', callback_data='PK_problems')
     kb4 = InlineKeyboardButton('Другое', callback_data='other')
     kb.add(kb1, kb2).add(kb3, kb4)
     return kb
