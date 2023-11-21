@@ -15,7 +15,7 @@ import logging
 
 storage = MemoryStorage()
 TOKEN = os.getenv('BOT_TOKEN')
-bot = Bot(TOKEN_API)
+bot = Bot(TOKEN)
 dp = Dispatcher(bot,
                 storage=storage)
 
