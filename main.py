@@ -9,6 +9,7 @@ from kbs.inline_kbs import get_kb, get_p_or_v_kb
 from kbs.reply_kbs import get_start_kb, get_start_and_back_kb
 from messages import *
 from states import ProfileStatesGroup, AdminStatesGroup
+import os
 
 storage = MemoryStorage()
 bot = Bot(TOKEN_API)
