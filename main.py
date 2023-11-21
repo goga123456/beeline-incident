@@ -11,6 +11,7 @@ from kbs.reply_kbs import get_start_kb, get_start_and_back_kb
 from messages import *
 from states import ProfileStatesGroup, AdminStatesGroup
 import os
+import logging
 
 storage = MemoryStorage()
 TOKEN = os.getenv('BOT_TOKEN')
