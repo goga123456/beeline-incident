@@ -236,7 +236,7 @@ async def load_photo(message: types.Message, state: FSMContext) -> None:
             now = datetime.now()
             user_id = message.from_user.id
             response_date = now.strftime("%d.%m.%Y %H:%M:%S")
-            await bot.send_photo(chat_id="-1001998156279",
+            await bot.send_photo(chat_id="-952509631",
                                  photo=data['it_photo'],
                                  caption=f"Номер заявки: {num}\n\n"
                                          f"Дата и время отклика: {response_date}\n\n"
@@ -279,7 +279,7 @@ async def load_video(message: types.Message, state: FSMContext) -> None:
             response_date = now.strftime("%d.%m.%Y %H:%M:%S")
             user_id = message.from_user.id
             # -952509631
-            await bot.send_video(chat_id="-1001998156279",
+            await bot.send_video(chat_id="-952509631",
                                  video=data['it_video'],
                                  caption=f"Номер заявки: {num}\n\n"
                                          f"Дата и время отклика: {response_date}\n\n"
@@ -346,7 +346,7 @@ async def oborudovaniye_table_number(message: types.Message, state: FSMContext) 
             now = datetime.now()
             response_date = now.strftime("%d.%m.%Y %H:%M:%S")
             user_id = message.from_user.id
-            await bot.send_message(chat_id="-1001998156279",
+            await bot.send_message(chat_id="-952509631",
                                    text=f"Номер заявки:{num}\n\n"
                                         f"Дата и время отклика:{response_date}\n\n"
                                         f"Номер рабочего места: {data['onumber']}\n"
@@ -399,7 +399,7 @@ async def process_callback_nothing(callback_query: types.CallbackQuery, state: F
         now = datetime.now()
         response_date = now.strftime("%d.%m.%Y %H:%M:%S")
         user_id = callback_query.from_user.id
-        await bot.send_message(chat_id="-1001998156279",
+        await bot.send_message(chat_id="-952509631",
                                text=f"Номер заявки: {num}\n\n"
                                     f"Дата и время отклика: {response_date}\n\n"
                                     f"Логин: {data['it_login']}\n"
