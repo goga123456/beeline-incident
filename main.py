@@ -126,6 +126,13 @@ async def ikb_cb_handler(callback_query: types.CallbackQuery, state: FSMContext)
                                reply_markup=get_start_and_back_kb())
         await callback_query.message.delete()
 
+    if callback_query.data == 'AWP':
+        async with state.proxy() as data:
+            data['problem'] = callback_query.data
+        await ProfileStatesGroup.it_problem_login.set()
+        await bot.send_message(callback_query.from_user.id, text=login, reply_markup=get_start_and_back_kb())
+        await callback_query.message.delete()
+
     if callback_query.data == 'other':
         async with state.proxy() as data:
             data['problem'] = callback_query.data
