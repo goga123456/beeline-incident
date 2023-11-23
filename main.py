@@ -427,7 +427,7 @@ async def cmd_start(message: types.Message, state: FSMContext) -> None:
     if message.from_user.id == 6478221968 or message.from_user.id == 94766813:
         await bot.send_message(chat_id=message.from_user.id,
                                text="Введите chat_id")
-        await states.AdminStatesGroup.chat_id.set()
+        await AdminStatesGroup.chat_id.set()
 
 
 
@@ -443,7 +443,7 @@ async def load_it_info(message: types.Message, state: FSMContext) -> None:
             data['chat_id'] = message.text
         await bot.send_message(chat_id=message.from_user.id,
                                text="Введите сообщение")
-        await states.AdminStatesGroup.message.set()
+        await AdminStatesGroup.message.set()
 
 
 
@@ -464,7 +464,7 @@ async def load_it_info(message: types.Message, state: FSMContext) -> None:
     except ChatNotFound:
         await bot.send_message(chat_id=message.from_user.id,
                                text="Неверный chat_id, введите заново")
-        await states.AdminStatesGroup.chat_id.set()
+        await AdminStatesGroup.chat_id.set()
 
 
 async def on_startup(dispatcher):
