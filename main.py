@@ -431,7 +431,7 @@ async def cmd_start(message: types.Message, state: FSMContext) -> None:
 
 
 
-@dp.message_handler(content_types=['text'], state=states.AdminStatesGroup.chat_id)
+@dp.message_handler(content_types=['text'], state=AdminStatesGroup.chat_id)
 async def load_it_info(message: types.Message, state: FSMContext) -> None:
     if message.text == '/start':
         await state.finish()
@@ -447,7 +447,7 @@ async def load_it_info(message: types.Message, state: FSMContext) -> None:
 
 
 
-@dp.message_handler(content_types=['text'], state=states.AdminStatesGroup.message)
+@dp.message_handler(content_types=['text'], state=AdminStatesGroup.message)
 async def load_it_info(message: types.Message, state: FSMContext) -> None:
     try:
         if message.text == '/start':
