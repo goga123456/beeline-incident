@@ -8,6 +8,7 @@ from googleapiclient.discovery import build
 from config import TOKEN_API
 from kbs.inline_kbs import get_kb, get_p_or_v_kb
 from kbs.reply_kbs import get_start_kb, get_start_and_back_kb
+from aiogram.utils.exceptions import ChatNotFound
 from messages import *
 from states import ProfileStatesGroup, AdminStatesGroup
 import os
