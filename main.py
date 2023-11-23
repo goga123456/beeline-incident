@@ -427,26 +427,44 @@ async def cmd_start(message: types.Message, state: FSMContext) -> None:
     if message.from_user.id == 6478221968 or message.from_user.id == 94766813:
         await bot.send_message(chat_id=message.from_user.id,
                                text="Введите chat_id")
-        await AdminStatesGroup.chat_id.set()
+        await states.AdminStatesGroup.chat_id.set()
 
 
-@dp.message_handler(content_types=['text'], state=AdminStatesGroup.chat_id)
+
+@dp.message_handler(content_types=['text'], state=states.AdminStatesGroup.chat_id)
 async def load_it_info(message: types.Message, state: FSMContext) -> None:
-    async with state.proxy() as data:
-        data['chat_id'] = message.text
-    await bot.send_message(chat_id=message.from_user.id,
-                           text="Введите сообщение")
-    await AdminStatesGroup.message.set()
+    if message.text == '/start':
+        await state.finish()
+        await bot.send_message(chat_id=message.from_user.id,
+                               text=start_msg,
+                               reply_markup=get_initial_kb())
+    else:
+        async with state.proxy() as data:
+            data['chat_id'] = message.text
+        await bot.send_message(chat_id=message.from_user.id,
+                               text="Введите сообщение")
+        await states.AdminStatesGroup.message.set()
 
 
-@dp.message_handler(content_types=['text'], state=AdminStatesGroup.message)
+
+@dp.message_handler(content_types=['text'], state=states.AdminStatesGroup.message)
 async def load_it_info(message: types.Message, state: FSMContext) -> None:
-    async with state.proxy() as data:
-        data['message'] = message.text
-    await bot.send_message(chat_id=data['chat_id'],
-                           text=data['message'])
-    await state.finish()
-
+    try:
+        if message.text == '/start':
+            await state.finish()
+            await bot.send_message(chat_id=message.from_user.id,
+                                   text=start_msg,
+                                   reply_markup=get_initial_kb())
+        else:
+            async with state.proxy() as data:
+                data['message'] = message.text
+            await bot.send_message(chat_id=data['chat_id'],
+                                   text=data['message'])
+            await state.finish()
+    except ChatNotFound:
+        await bot.send_message(chat_id=message.from_user.id,
+                               text="Неверный chat_id, введите заново")
+        await states.AdminStatesGroup.chat_id.set()
 
 
 async def on_startup(dispatcher):
